@@ -1,4 +1,6 @@
 import csv
+import pandas as pd
+from PIL import Image
 
 class FileProcessor:
     def __init__(self, file_path):
@@ -37,15 +39,41 @@ class TextProcessor(FileProcessor):
             print(f"Error reading TXT: {e}")
 
 
+class ParquetProcessor(FileProcessor):
+    def process(self):
+        try:
+            df = pd.read_parquet(self.file_path)
+            print(f"\nParquet File: {self.file_path}")
+            print(f"Total records: {len(df)}")
+            print("Columns:", list(df.columns))
+            print("First row:\n", df.iloc[0] if not df.empty else "N/A")
+        except Exception as e:
+            print(f"Error reading Parquet: {e}")
+
+
+class ImageProcessor(FileProcessor):
+    def process(self):
+        try:
+            img = Image.open(self.file_path)
+            print(f"\nImage File: {self.file_path}")
+            print(f"Format: {img.format}")
+            print(f"Size: {img.size}")
+            print(f"Mode: {img.mode}")
+        except Exception as e:
+            print(f"Error reading image: {e}")
+
+
 def main():
     print("Welcome to the File Processor Tool!")
     while True:
         print("\nChoose an option:")
         print("1. Process CSV file")
         print("2. Process TXT file")
-        print("3. Exit")
+        print("3. Process Parquet file")
+        print("4. Process Image file")
+        print("5. Exit")
 
-        choice = input("Enter your choice (1-3): ")
+        choice = input("Enter your choice (1-5): ")
 
         if choice == '1':
             file_path = input("Enter path to CSV file: ").strip()
@@ -56,10 +84,18 @@ def main():
             processor = TextProcessor(file_path)
             processor.process()
         elif choice == '3':
+            file_path = input("Enter path to Parquet file: ").strip()
+            processor = ParquetProcessor(file_path)
+            processor.process()
+        elif choice == '4':
+            file_path = input("Enter path to Image file (e.g. .jpg, .png): ").strip()
+            processor = ImageProcessor(file_path)
+            processor.process()
+        elif choice == '5':
             print("Exiting program. Goodbye!")
             break
         else:
-            print("Invalid choice. Please enter 1, 2, or 3.")
+            print("Invalid choice. Please enter 1 to 5.")
 
 
 if __name__ == "__main__":
