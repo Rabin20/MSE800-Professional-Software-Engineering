@@ -1,6 +1,6 @@
 import pandas as pd
 
-# Set the correct path if needed
+
 file_name = 'Sample_data_2.parquet'
 
 # Read the Parquet file
