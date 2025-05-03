@@ -54,13 +54,50 @@ class ParquetProcessor(FileProcessor):
 class ImageProcessor(FileProcessor):
     def process(self):
         try:
-            img = Image.open(self.file_path)
+            import tensorflow as tf
+            import numpy as np
+            import matplotlib.pyplot as plt
+
+            img = Image.open(self.file_path).convert('RGB')  # Ensure it's RGB
             print(f"\nImage File: {self.file_path}")
             print(f"Format: {img.format}")
             print(f"Size: {img.size}")
             print(f"Mode: {img.mode}")
+
+            # Display the image
+            plt.imshow(img)
+            plt.title("Loaded Image")
+            plt.axis('off')
+            plt.show()
+
+            # Resize and normalize the image for training
+            img = img.resize((32, 32))  # Resize to 32x32 like CIFAR-10
+            img_array = np.array(img) / 255.0  # Normalize
+            img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+
+            # Create a dummy label (e.g., class 0)
+            label = np.array([0])
+
+            # Define a simple CNN model
+            model = tf.keras.Sequential([
+                tf.keras.layers.Conv2D(16, (3, 3), activation='relu', input_shape=(32, 32, 3)),
+                tf.keras.layers.MaxPooling2D((2, 2)),
+                tf.keras.layers.Flatten(),
+                tf.keras.layers.Dense(32, activation='relu'),
+                tf.keras.layers.Dense(1, activation='sigmoid')  # Binary output
+            ])
+
+            model.compile(optimizer='adam',
+                          loss='binary_crossentropy',
+                          metrics=['accuracy'])
+
+            print("\nTraining the model on the single loaded image (dummy label)...")
+            model.fit(img_array, label, epochs=3, verbose=2)
+
+            print("Training complete.")
+
         except Exception as e:
-            print(f"Error reading image: {e}")
+            print(f"Error reading or processing image: {e}")
 
 
 def main():
