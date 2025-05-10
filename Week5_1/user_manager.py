@@ -130,3 +130,12 @@ def enroll_user_in_course(user_id, course_id):
     except sqlite3.IntegrityError:
         print("Error: Enrollment already exists.")
     conn.close()
+
+def view_courses():
+    conn = create_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM course")
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+

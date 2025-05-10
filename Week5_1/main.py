@@ -1,5 +1,5 @@
 from database import create_table
-from user_manager import add_user, view_users, search_user, delete_user, search_user_by_id, insert_course, search_course, create_enrollment_table , enroll_user_in_course
+from user_manager import add_user, view_users, search_user, delete_user, search_user_by_id, insert_course, search_course, create_enrollment_table , enroll_user_in_course, view_courses, create_course_table
 def menu():
     print("\n==== User Manager ====")
     print("1. Add User")
@@ -10,7 +10,8 @@ def menu():
     print("6. Insert Course")
     print("7. Enroll User in Course")
     print("8. Search Course by ID and User Name")
-    print("9. Exit")
+    print("9. View All Courses")
+    print("10. Exit")
 
 def main():
     create_table()
@@ -65,8 +66,11 @@ def main():
             results = search_course(course_id, user_name)
             for row in results:
                 print("Found:", row)
-
         elif choice == '9':
+            courses = view_courses()
+            for course in courses:
+                print(course)
+        elif choice == '10':
             print("Goodbye!")
             break
         else:
