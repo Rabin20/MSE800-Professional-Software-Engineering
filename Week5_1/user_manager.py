@@ -48,7 +48,8 @@ def search_user_by_id(name, user_id):
     return rows
 
 
-# Function to create the course table
+
+# This function creates a course table with id, name, and unit columns
 def create_course_table():
     conn = create_connection()
     cursor = conn.cursor()
@@ -62,7 +63,8 @@ def create_course_table():
     conn.commit()
     conn.close()
 
-# Function to insert a course into the course table
+
+# This function takes course_id, name, and unit as parameters
 def insert_course(course_id, name, unit):
     conn = create_connection()
     cursor = conn.cursor()
@@ -74,7 +76,8 @@ def insert_course(course_id, name, unit):
         print("Error: Course ID must be unique.")
     conn.close()
 
-# Function to search for a course by course_id and user_name
+
+# This function takes course_id and user_name as parameters
 def search_course(course_id, user_name):
     conn = create_connection()
     cursor = conn.cursor()
@@ -88,7 +91,8 @@ def search_course(course_id, user_name):
     conn.close()
     return rows
 
-# Function to create the enrollment table for user-course relationship
+
+# This function creates an enrollment table with user_id and course_id columns
 def create_enrollment_table():
     conn = create_connection()
     cursor = conn.cursor()
@@ -103,7 +107,8 @@ def create_enrollment_table():
     conn.commit()
     conn.close()
 
-# Function to enroll a user in a course
+
+# This function takes user_id and course_id as parameters
 def enroll_user_in_course(user_id, course_id):
     conn = create_connection()
     cursor = conn.cursor()
