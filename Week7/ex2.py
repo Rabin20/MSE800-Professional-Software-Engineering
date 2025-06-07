@@ -24,7 +24,7 @@ class Dog(Animals):
 
 class Cat(Animals):
     def run(self):
-        print("I'm a Cat!!")
+        print("I'm a Cat, Run!!")
 
 # Client
 factory = DogFactory()
