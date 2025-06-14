@@ -24,27 +24,37 @@ def check_winner(board):
         return board[0][2]
     return None
 def is_board_full(board):
+    # Check if the board is full (no empty spaces)
+    # Iterate through each row in the board
     for row in board:
         if " " in row:
             return False
     return True
 def make_move(board, row, col, player):
+    # Check if the move is valid (the cell is empty)
+    # If the cell is empty, place the player's symbol in that cell
     if board[row][col] == " ":
         board[row][col] = player
         return True
     return False    
 def get_available_moves(board):
+    # Get a list of all available moves (empty cells)
     moves = []
+    # Iterate through each cell in the board
     for i in range(3):
+        # If the cell is empty, add its coordinates to the moves list
         for j in range(3):
             if board[i][j] == " ":
                 moves.append((i, j))
     return moves
 def play_game():
+    # Initialize the game board and players
     board = [[" " for _ in range(3)] for _ in range(3)]
+    # Randomly choose the starting player
     players = ["X", "O"]
-    current_player = random.choice(players)
-    
+    current_player = random.choice(players) 
+
+
     while True:
         print_board(board)
         if is_board_full(board):
