@@ -12,6 +12,7 @@
         <input type="file" id="file" name="file" accept="image/*">
         <button type="submit">Upload</button>
     </form>
+    
     {% if image_url %}
         <h2>Uploaded Image:</h2>
         <img src="{{ image_url }}" alt="Uploaded Image" style="max-width: 500px; max-height: 500px;">
